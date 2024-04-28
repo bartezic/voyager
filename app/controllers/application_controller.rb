@@ -2,7 +2,13 @@ class ApplicationController < ActionController::Base
   before_action :configure_permitted_parameters, if: :devise_controller?
 
   def after_sign_in_path_for(resource_or_scope)
-    stored_location_for(resource_or_scope) || cabinet_path
+    stored_location_for(resource_or_scope) || root_path
+  end
+
+  helper_method :current_team
+  def current_team
+    @current_team ||= current_user.teams.find(session[:current_team_id]) if session[:current_team_id]
+    @current_team ||= current_user.teams.last
   end
 
   protected

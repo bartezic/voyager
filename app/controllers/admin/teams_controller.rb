@@ -1,5 +1,5 @@
 class Admin::TeamsController < Admin::BaseController
-  before_action :set_team, only: %i[ show edit update destroy ]
+  before_action :set_team, only: %i[show edit update destroy]
 
   # GET /admin/teams or /admin/teams.json
   def index
@@ -58,13 +58,14 @@ class Admin::TeamsController < Admin::BaseController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_team
-      @team = Team.find(params[:id])
-    end
 
-    # Only allow a list of trusted parameters through.
-    def team_params
-      params.require(:team).permit(:name, :description, :owner_id)
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_team
+    @team = Team.find(params[:id])
+  end
+
+  # Only allow a list of trusted parameters through.
+  def team_params
+    params.require(:team).permit(:name, :description, :owner_id, team_roles_attributes: [:id, :user_id, :role_id, :_destroy])
+  end
 end

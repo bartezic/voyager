@@ -1,5 +1,5 @@
 class Admin::RolesController < Admin::BaseController
-  before_action :set_role, only: %i[ show edit update destroy ]
+  before_action :set_role, only: %i[show edit update destroy]
 
   # GET /admin/roles or /admin/roles.json
   def index
@@ -58,13 +58,14 @@ class Admin::RolesController < Admin::BaseController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_role
-      @role = Role.find(params[:id])
-    end
 
-    # Only allow a list of trusted parameters through.
-    def role_params
-      params.require(:role).permit(:name, :description, :permissions)
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_role
+    @role = Role.find(params[:id])
+  end
+
+  # Only allow a list of trusted parameters through.
+  def role_params
+    params.require(:role).permit(:name, :description, permissions: [])
+  end
 end

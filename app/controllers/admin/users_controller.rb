@@ -1,5 +1,5 @@
-class Admin::UserController < Admin::BaseController
-  before_action :set_user, only: %i[ show edit update destroy ]
+class Admin::UsersController < Admin::BaseController
+  before_action :set_user, only: %i[show edit update destroy]
 
   # GET /admin/users or /admin/users.json
   def index
@@ -58,13 +58,14 @@ class Admin::UserController < Admin::BaseController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_user
-      @user = User.find(params[:id])
-    end
 
-    # Only allow a list of trusted parameters through.
-    def user_params
-      params.require(:user).permit(:name, :description, :owner_id)
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_user
+    @user = User.find(params[:id])
+  end
+
+  # Only allow a list of trusted parameters through.
+  def user_params
+    params.require(:user).permit(:name, :description, :owner_id)
+  end
 end

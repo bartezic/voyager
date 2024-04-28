@@ -3,14 +3,14 @@ Rails.application.routes.draw do
     resources :roles
     resources :teams
     resources :users
-    get '/', to: "pages#home"
+    get "/", to: "pages#home"
   end
 
   namespace :cabinet do
     resources :roles
     resources :teams
     resources :users
-    get '/', to: "pages#home"
+    get "/", to: "pages#home"
   end
 
   devise_for :users

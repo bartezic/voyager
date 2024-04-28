@@ -1,8 +1,29 @@
+- content_for :page_head do
+  .flex.justify-between.items-center
+    %h1.font-bold.text-4xl Admin Users
+    = link_to "New user", new_admin_user_path, class: "rounded-lg py-3 px-5 bg-blue-600 text-white block font-medium"
+
 .w-full
   - if notice.present?
     %p#notice.py-2.px-3.bg-green-50.mb-5.text-green-500.font-medium.rounded-lg.inline-block= notice
-  .flex.justify-between.items-center
-    %h1.font-bold.text-4xl Users
-    = link_to "New user", new_admin_user_path, class: "rounded-lg py-3 px-5 bg-blue-600 text-white block font-medium"
+
   #admin_roles.min-w-full
-    = render @users
+    %table.w-full.border-collapse.bg-white.text-left.text-sm.text-gray-500
+      %thead.bg-gray-50
+        %tr
+          %th.px-6.py-4.font-medium.text-gray-900
+            %strong.block.font-medium.mb-1 ID
+          %th.px-6.py-4.font-medium.text-gray-900
+            %strong.block.font-medium.mb-1 First name
+          %th.px-6.py-4.font-medium.text-gray-900
+            %strong.block.font-medium.mb-1 Last name
+          %th.px-6.py-4.font-medium.text-gray-900
+            %strong.block.font-medium.mb-1 Username
+          %th.px-6.py-4.font-medium.text-gray-900
+            %strong.block.font-medium.mb-1 Email
+          %th.px-6.py-4.font-medium.text-gray-900
+            %strong.block.font-medium.mb-1 Is admin
+          %th.px-6.py-4.font-medium.text-gray-900
+            %strong.block.font-medium.mb-1 Actions
+      %tbody
+        = render @users
