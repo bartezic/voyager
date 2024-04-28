@@ -1,0 +1,14 @@
+%div{:id => "#{dom_id role}"}
+  %p.my-5
+    %strong.block.font-medium.mb-1 Name:
+    = role.name
+  %p.my-5
+    %strong.block.font-medium.mb-1 Description:
+    = role.description
+  %p.my-5
+    %strong.block.font-medium.mb-1 Permissions:
+    = role.permissions
+  - if action_name != "show"
+    = link_to "Show this role", [:admin, role], class: "rounded-lg py-3 px-5 bg-gray-100 inline-block font-medium"
+    = link_to "Edit this role", edit_admin_role_path(role), class: "rounded-lg py-3 ml-2 px-5 bg-gray-100 inline-block font-medium"
+    %hr.mt-6/

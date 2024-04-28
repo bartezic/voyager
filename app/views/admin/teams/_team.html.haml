@@ -1,0 +1,14 @@
+%div{:id => "#{dom_id team}"}
+  %p.my-5
+    %strong.block.font-medium.mb-1 Name:
+    = team.name
+  %p.my-5
+    %strong.block.font-medium.mb-1 Description:
+    = team.description
+  %p.my-5
+    %strong.block.font-medium.mb-1 Owner:
+    = team.owner_id
+  - if action_name != "show"
+    = link_to "Show this team", [:admin, team], class: "rounded-lg py-3 px-5 bg-gray-100 inline-block font-medium"
+    = link_to "Edit this team", edit_team_path(team), class: "rounded-lg py-3 ml-2 px-5 bg-gray-100 inline-block font-medium"
+    %hr.mt-6/
