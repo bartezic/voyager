@@ -1,0 +1,29 @@
+= form_with(model: [:admin, team], class: "contents") do |form|
+  - if team.errors.any?
+    #error_explanation.bg-red-50.text-red-500.px-3.py-2.font-medium.rounded-lg.mt-3
+      %h2
+        = pluralize(team.errors.count, "error")
+        prohibited this team from being saved:
+      %ul
+        - team.errors.each do |error|
+          %li= error.full_message
+  .my-5
+    = form.label :name
+    = form.text_field :name, class: "block shadow rounded-md border border-gray-200 outline-none px-3 py-2 mt-2 w-full"
+  .my-5
+    = form.label :description
+    = form.text_area :description, rows: 4, class: "block shadow rounded-md border border-gray-200 outline-none px-3 py-2 mt-2 w-full"
+  .my-5
+    = form.label :owner_id
+    = form.collection_select(:owner_id, User.all, :id, :full_name, {prompt: "Choose an Owner"}, class: "block shadow rounded-md border border-gray-200 outline-none px-3 py-2 mt-2 w-full")
+  .my-5
+    = form.label :team_roles
+    #team_roles
+      = form.fields_for :team_roles do |team_role_form|
+        = render 'team_role_fields', f: team_role_form
+
+    .my-5
+      = link_to_add_fields "Add member", form, :team_roles
+
+  .inline
+    = form.submit class: "rounded-lg py-3 px-5 bg-blue-600 text-white inline-block font-medium cursor-pointer"

@@ -1,0 +1,53 @@
+%nav.bg-gray-800
+  .mx-auto.max-w-7xl.px-4.sm:px-6.lg:px-8
+    .flex.h-16.items-center.justify-between
+      .flex.items-center
+        .flex-shrink-0
+          %img.h-8.w-8{:alt => "Your Company", :src => "https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=500"}/
+        %div
+          .ml-10.flex.items-baseline.space-x-4
+            = link_to "Home", current_user_root_path, class: active_nav_class(current_user_root_path)
+            - if current_user&.is_admin?
+              = link_to "Users", admin_users_path, class: active_nav_class(admin_users_path)
+              = link_to "Roles", admin_roles_path, class: active_nav_class(admin_roles_path)
+              = link_to "Teams", admin_teams_path, class: active_nav_class(admin_teams_path)
+            - elsif user_signed_in?
+              = link_to "Users", cabinet_users_path, class: active_nav_class(cabinet_users_path)
+              = link_to "Roles", cabinet_roles_path, class: active_nav_class(cabinet_roles_path)
+              = link_to "Teams", cabinet_teams_path, class: active_nav_class(cabinet_teams_path)
+      %div
+        .ml-4.flex.items-center.md:ml-6
+          - if user_signed_in?
+            - unless current_user.is_admin?
+              / Teams dropdown
+              .relative.ml-3
+                %div
+                  %button.relative.flex.max-w-xs.items-center.rounded-full.bg-gray-800.text-sm.focus:outline-none.focus:ring-2.focus:ring-white.focus:ring-offset-2.focus:ring-offset-gray-800{"aria-expanded" => "false", "aria-haspopup" => "true", :type => "button", onclick: "toggleDropdown('teams')" }
+                    .ml-3
+                      .text-base.font-medium.leading-none.text-white Current team #{current_team&.name || 'NONE'}
+                #teams-dropdown-menu.hidden.absolute.right-0.z-10.mt-2.w-48.origin-top-right.rounded-md.bg-white.py-1.shadow-lg.ring-1.ring-black.ring-opacity-5.focus:outline-none{"aria-labelledby" => "user-menu-button", "aria-orientation" => "vertical", :role => "menu", :tabindex => "-1"}
+                  - teams = current_user.teams.where.not(id: current_team&.id)
+                  - if teams.any?
+                    - teams.each do |team|
+                      = link_to "Switch to #{team.name}", cabinet_path(current_team_id: team.id)
+                  - else
+                    NO TEAM TO SELECT
+
+            / Profile dropdown
+            .relative.ml-3
+              %div
+                %button.relative.flex.max-w-xs.items-center.rounded-full.bg-gray-800.text-sm.focus:outline-none.focus:ring-2.focus:ring-white.focus:ring-offset-2.focus:ring-offset-gray-800{"aria-expanded" => "false", "aria-haspopup" => "true", :type => "button", onclick: "toggleDropdown('user')" }
+                  %span.absolute{:class => "-inset-1.5"}
+                  %span.sr-only Open user menu
+                  %img.h-8.w-8.rounded-full{:alt => "", :src => "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"}
+                  .ml-3
+                    .text-base.font-medium.leading-none.text-white= current_user.full_name
+                    .text-sm.font-medium.leading-none.text-gray-400= current_user.email
+              #user-dropdown-menu.hidden.absolute.right-0.z-10.mt-2.w-48.origin-top-right.rounded-md.bg-white.py-1.shadow-lg.ring-1.ring-black.ring-opacity-5.focus:outline-none{"aria-labelledby" => "user-menu-button", "aria-orientation" => "vertical", :role => "menu", :tabindex => "-1"}
+                = link_to "Edit profile", edit_user_registration_path, class: "block px-4 py-2 text-sm text-gray-700"
+                = link_to "Sign out", destroy_user_session_path, data: { turbo_method: :delete }, class: "block px-4 py-2 text-sm text-gray-700"
+          - else
+            .ml-10.flex.items-baseline.space-x-4
+              = link_to "Log in", new_session_path(:user), class: active_nav_class(new_session_path(:user))
+              = link_to "Sign up", new_registration_path(:user), class: active_nav_class(new_registration_path(:user))
+              

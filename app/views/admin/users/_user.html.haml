@@ -1,0 +1,11 @@
+%tr{:id => "#{dom_id user}"}
+  %td.px-6.py-4= user.id
+  %td.px-6.py-4= user.first_name
+  %td.px-6.py-4= user.last_name
+  %td.px-6.py-4= user.username
+  %td.px-6.py-4= user.email
+  %td.px-6.py-4= user.is_admin? ? 'YES' : 'NO'
+  %td.px-6.py-4
+    - if action_name != "show"
+      = link_to "Show this user", [:admin, user], class: "rounded-lg py-3 px-5 bg-gray-100 inline-block font-medium"
+      = link_to "Edit this user", edit_admin_user_path(user), class: "rounded-lg py-3 ml-2 px-5 bg-gray-100 inline-block font-medium"
